@@ -11,12 +11,10 @@ import {
 import { app } from "../../Firebase/firebase.config";
 import toast from "react-hot-toast";
 export const AuthContext = createContext(null);
+const auth = getAuth(app);
 const AuthProvider = ({ children }) => {
-  const auth = getAuth(app);
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
-
-  console.log(user);
   const createUser = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
   };
