@@ -18,6 +18,7 @@ const Register = () => {
       .then((result) => {
         toast.success("account registered");
         setUser(result.user);
+        navigate("/login")
       })
       .catch((error) => {
         toast.error("Email maybe already used");

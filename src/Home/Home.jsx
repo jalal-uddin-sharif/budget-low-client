@@ -8,17 +8,18 @@ const Home = () => {
     const [totalPages, setTotalPages] = useState(1);
     const [loading, setLoading] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
-   
     const [selectedCategory, setSelectedCategory] = useState('');
     const [selectedBrand, setSelectedBrand] = useState('');
+    const [sortOption, setSortOption] = useState(''); // State for sorting
 
     const categories = [
         "Electronics",
         "Furniture",
         "Footwear",
         "Groceries"
-      ]
-      const brands = [
+    ];
+    
+    const brands = [
         "ViewMaster",
         "SoundWave",
         "TechTime",
@@ -56,21 +57,21 @@ const Home = () => {
         "DairyFresh",
         "BrewMasters",
         "EcoMilk"
-      ]
-      
-      
+    ];
+
     useEffect(() => {
         const fetchProducts = async () => {
             setLoading(true);
             try {
-                const response = await axios.get(`http://localhost:3000/products`, {
+                const response = await axios.get(`${import.meta.env.VITE_API_SECRET}/products`, {
                     params: {
                         page,
                         limit: 10,
                         search: searchTerm,
                         price,
                         category: selectedCategory,
-                        brand: selectedBrand
+                        brand: selectedBrand,
+                        sort: sortOption // Send sorting option
                     }
                 });
                 console.log("Fetched data:", response.data);
@@ -84,7 +85,7 @@ const Home = () => {
         };
 
         fetchProducts();
-    }, [page, price, searchTerm, selectedCategory, selectedBrand]);
+    }, [page, price, searchTerm, selectedCategory, selectedBrand, sortOption]);
 
     const handlePageChange = (newPage) => {
         if (newPage > 0 && newPage <= totalPages) {
@@ -106,9 +107,9 @@ const Home = () => {
     };
 
     return (
-        <div className="container mx-auto">
+        <div className="container mx-auto px-4">
             {/* Search Box */}
-            <div className="flex gap-4 justify-center mt-16">
+            <div className="flex flex-col md:flex-row gap-4 justify-center mt-16">
                 <input
                     type="text"
                     placeholder="Type here"
@@ -124,12 +125,12 @@ const Home = () => {
                 </button>
             </div>
 
-            {/* Filter Box */}
-            <div className="lg:flex items-center gap-6 mt-10 ">
-                <div className="w-full flex">
-                    <div className="w-full">
+            {/* Filter and Sort Box */}
+            <div className="flex flex-col lg:flex-row gap-6 mt-10">
+                <div className="flex flex-col lg:flex-row gap-6 w-full">
+                    <div className="w-full md:w-1/2">
                         <select
-                            className="select select-primary w-full max-w-xs"
+                            className="select select-primary w-full"
                             value={selectedBrand}
                             onChange={(e) => setSelectedBrand(e.target.value)}
                         >
@@ -142,9 +143,9 @@ const Home = () => {
                         </select>
                     </div>
 
-                    <div className="w-full">
+                    <div className="w-full md:w-1/2">
                         <select
-                            className="select select-primary w-full max-w-xs"
+                            className="select select-primary w-full"
                             value={selectedCategory}
                             onChange={(e) => setSelectedCategory(e.target.value)}
                         >
@@ -159,29 +160,33 @@ const Home = () => {
                 </div>
 
                 <div className="w-full">
-                    <h1>Price: ${price} </h1>
+                    <h1>Price: ${price}</h1>
                     <input
                         onChange={(e) => setPrice(e.target.value)}
                         type="range"
                         min={0}
                         max="500"
                         value={price}
-                        className="range range-error"
+                        className="range range-error w-full"
                     />
+                </div>
+
+                <div className="w-full mt-4 lg:mt-0">
+                    <select
+                        className="select select-primary w-full"
+                        value={sortOption}
+                        onChange={(e) => setSortOption(e.target.value)}
+                    >
+                        <option value="">Sort by</option>
+                        <option value="priceAsc">Price: Low to High</option>
+                        <option value="priceDesc">Price: High to Low</option>
+                        <option value="dateDesc">Date Added: Newest First</option>
+                    </select>
                 </div>
             </div>
 
-            <div className="w-full flex justify-center mt-8 ">
-                <button
-                    className="btn btn-accent btn-wide"
-                    onClick={handleFilterChange}
-                >
-                    Filter
-                </button>
-            </div>
-
             {/* Products Display */}
-            <div className="grid grid-cols-5 gap-4 mt-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-6">
                 {loading ? (
                     <div>Loading...</div>
                 ) : (

@@ -10,10 +10,10 @@ const Nav = () => {
   const navlinks = (
     <>
       <li>
-        <NavLink to={"/profile"} className="justify-between">
+        <a className="justify-between">
           Profile
           <span className="badge">New</span>
-        </NavLink>
+        </a>
       </li>
       <li>
         <a>Settings</a>
@@ -37,13 +37,13 @@ const Nav = () => {
           <Link to={"/"} className="btn btn-ghost text-xl bg-cyan-100">BudgetLow</Link>
         </div>
         <div className="flex-none gap-2">
-          <div className="form-control">
-            <input
-              type="text"
-              placeholder="Search"
-              className="input input-bordered w-24 md:w-auto"
-            />
-          </div>
+         <div>
+          {
+            user ? 
+          <button onClick={logOut} className="btn">LogOut</button>:
+          <Link to={"/login"} className="btn">Login</Link> 
+          }
+         </div>
           <div className="dropdown dropdown-end">
             <div
               tabIndex={0}
