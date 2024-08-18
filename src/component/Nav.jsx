@@ -1,6 +1,23 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 const Nav = () => {
+    const navlinks = (
+        <>
+             <li>
+                <NavLink to={"/profile"} className="justify-between">
+                  Profile
+                  <span className="badge">New</span>
+                </NavLink>
+              </li>
+              <li>
+                <a>Settings</a>
+              </li>
+              <li>
+                <NavLink to={"/login"}>LogIn</NavLink>
+              </li>
+        </>
+    )
   return (
     <div className="container mx-auto">
       <div className="navbar bg-base-100">
@@ -32,18 +49,9 @@ const Nav = () => {
               tabIndex={0}
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
             >
-              <li>
-                <a className="justify-between">
-                  Profile
-                  <span className="badge">New</span>
-                </a>
-              </li>
-              <li>
-                <a>Settings</a>
-              </li>
-              <li>
-                <a>Logout</a>
-              </li>
+         {
+            navlinks
+         }
             </ul>
           </div>
         </div>
