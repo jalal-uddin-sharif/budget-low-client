@@ -1,13 +1,29 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AuthContext } from "./authprovider/AuthProvider";
+import { Result } from "postcss";
+import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const Login = () => {
 
+    const {loginUser, setUser} = useContext(AuthContext)
+    const navigate = useNavigate()
     const loginButton = (e) =>{
         e.preventDefault()
         const form = e.target
         const Email = form.email.value;
         const Password = form.password.value;
         console.log(Email, Password);
+        loginUser(Email, Password)
+        .then(result =>{
+            console.log(result.user);
+            setUser(result.user)
+            toast.success("login success")
+            navigate("/")
+        })
+        .catch(error => console.log(error))
+
+        
     }
   return (
     <div>
@@ -43,6 +59,11 @@ const Login = () => {
                   <a href="#" className="label-text-alt link link-hover">
                     Forgot password?
                   </a>
+                </label>
+                <label className="label">
+                  <Link to={"/register"} className="label-text-alt link link-hover">
+                    haven't account? <span className="text-purple-500">Register</span>
+                  </Link>
                 </label>
               </div>
               <div className="form-control mt-6">
