@@ -1,9 +1,12 @@
 import React, { useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../authentication/authprovider/AuthProvider";
+import { getAuth, signOut } from "firebase/auth";
 
 const Nav = () => {
-  const { user } = useContext(AuthContext);
+  const { user, logOut } = useContext(AuthContext);
+  console.log(user);
+
   const navlinks = (
     <>
       <li>
@@ -18,7 +21,7 @@ const Nav = () => {
       {user ? (
         <li>
           {" "}
-          <button>LogOut</button>{" "}
+          <button onClick={logOut}>LogOut</button>{" "}
         </li>
       ) : (
         <li>
@@ -31,7 +34,7 @@ const Nav = () => {
     <div className="container mx-auto">
       <div className="navbar bg-base-100">
         <div className="flex-1">
-          <a className="btn btn-ghost text-xl bg-cyan-100">BudgetLow</a>
+          <Link to={"/"} className="btn btn-ghost text-xl bg-cyan-100">BudgetLow</Link>
         </div>
         <div className="flex-none gap-2">
           <div className="form-control">

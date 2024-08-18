@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 
 const Login = () => {
 
-    const {loginUser, setUser} = useContext(AuthContext)
+    const {loginUser, setUser, googleLogin} = useContext(AuthContext)
     const navigate = useNavigate()
     const loginButton = (e) =>{
         e.preventDefault()
@@ -28,7 +28,7 @@ const Login = () => {
   return (
     <div>
       <div className="hero bg-base-200 min-h-screen">
-        <div className="hero-content flex-col lg:flex-row-reverse">
+       
           
           <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
             <form onSubmit={loginButton} className="card-body">
@@ -69,8 +69,11 @@ const Login = () => {
               <div className="form-control mt-6">
                 <button type="submit" className="btn btn-primary">Login</button>
               </div>
+          <a onClick={()=>googleLogin(navigate)} className="btn rounded-b-full">Login with google</a>
+          
+
             </form>
-          </div>
+          
         </div>
       </div>
     </div>

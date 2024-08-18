@@ -1,10 +1,11 @@
 import React, { useContext } from "react";
 import { AuthContext } from "./authprovider/AuthProvider";
 import toast from "react-hot-toast";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 const Register = () => {
-  const { createUser, setUser } = useContext(AuthContext);
+  const { createUser, setUser, googleLogin } = useContext(AuthContext);
+  const navigate = useNavigate()
   const registerButton = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -78,6 +79,7 @@ const Register = () => {
                 Register
               </button>
             </div>
+          <a onClick={()=>googleLogin(navigate)} className="btn rounded-b-full">Login with google</a>
           </form>
         </div>
       </div>
